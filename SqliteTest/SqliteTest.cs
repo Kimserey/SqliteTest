@@ -1,45 +1,46 @@
 ﻿using System;
-
+using SQLite;
 using Xamarin.Forms;
 
 namespace SqliteTest
 {
+	public interface IPathProvider
+	{
+		string GetDbPath();
+	}
+
+	[Table("test_tabe")]
+	public class Test {
+		
+		[Column("number")]
+		public int Number { get; set; }
+	}
+
 	public class App : Application
 	{
 		public App()
 		{
-			// The root page of your application
 			var content = new ContentPage
 			{
 				Title = "SqliteTest",
 				Content = new StackLayout
 				{
-					VerticalOptions = LayoutOptions.Center,
 					Children = {
 						new Label {
-							HorizontalTextAlignment = TextAlignment.Center,
-							Text = "Welcome to Xamarin Forms!"
+							Text = "Test Sqlite"
 						}
 					}
 				}
 			};
 
+
+			var path = DependencyService.Get<IPathProvider>().GetDbPath();
+
+			var conn = new SQLiteConnection(path);
+			conn.CreateTable<Test>();
+			conn.Insert(new Test { Number = 10 });
+
 			MainPage = new NavigationPage(content);
-		}
-
-		protected override void OnStart()
-		{
-			// Handle when your app starts
-		}
-
-		protected override void OnSleep()
-		{
-			// Handle when your app sleeps
-		}
-
-		protected override void OnResume()
-		{
-			// Handle when your app resumes
 		}
 	}
 }
