@@ -18,7 +18,8 @@ namespace SqliteTest.Droid
 	{
 		public string GetDbPath()
 		{
-			return Path.Combine(Android.OS.Environment.DataDirectory.AbsolutePath, "test.db");
+			var path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "test.db");
+			return path;
 		}
 	}
 
