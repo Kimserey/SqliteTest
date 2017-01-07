@@ -18,7 +18,7 @@ namespace SqliteTest
 
 		[Column("id"), PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
-		[Column("text")]
+		[Column("text"), Collation("NOCASE")]
 		public string Text { get; set; }
 	}
 
@@ -91,7 +91,6 @@ namespace SqliteTest
 			Refresh();
 		}
 
-		// Don't forget to dispose it.
 		internal static SQLiteConnection GetSQliteConnection()
 		{ 
 			var path = DependencyService.Get<IPathProvider>().GetDbPath();
